@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.itheima.dao.OrderSettingDao">
+
+
+
+
+<!--    SELECT-->
+<!--    DATE_FORMAT( orderDate,'%d' ) AS date-->
+<!--    FROM-->
+<!--    t_ordersetting-->
+<!--    WHERE-->
+<!--    DATE_FORMAT( orderDate, '%Y-%m' ) = '2020-03'-->
+<!--    给每一个日期来设置新的number-->
+    <insert id="inserOrderSetting" parameterType="com.itheima.pojo.OrderSetting">
+        insert into t_ordersetting (orderDate,number,reservations)  values
+      		(#{orderDate},#{number},#{reservations})
+    </insert>
+
+    <update id="updataOrderSetting" parameterType="com.itheima.pojo.OrderSetting" >
+        update t_ordersetting   set  number = #{number} where orderDate=#{orderDate}
+    </update>
+
+    <select id="findCountByOrderDate" parameterType="date" resultType="long">
+        select count(id) from t_ordersetting where orderDate = #{orderDate}
+    </select>
+    <select id="getOrderSettingByMonth" parameterType="String" resultType="com.itheima.pojo.LeftOb">
+    SELECT DATE_FORMAT( orderDate,'%d' ) AS DATE,number,reservations  FROM  t_ordersetting  WHERE  DATE_FORMAT( orderDate, '%Y-%m' ) = #{value}
+     </select>
+
+</mapper>
